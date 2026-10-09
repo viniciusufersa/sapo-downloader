@@ -46,7 +46,7 @@ class ServicoYtDlp:
     @staticmethod
     def _opcoes_grupo_processo() -> OpcoesGrupoProcesso:
         if os.name == "nt":
-            return {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
+            return {"creationflags": getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)}
         return {"start_new_session": True}
 
     @staticmethod
