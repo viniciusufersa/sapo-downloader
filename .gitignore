@@ -1,0 +1,38 @@
+# Node
+node_modules/
+dist/
+.vite/
+coverage/
+*.tsbuildinfo
+.playwright-mcp/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+
+# Env and credentials
+.env
+.env.*
+!.env.example
+
+# Temp media and logs
+.tmp/
+tmp/
+downloads/
+*.log
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# OneDrive conflict artifacts
+*-conflict-*

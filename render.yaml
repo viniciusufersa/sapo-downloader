@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: sapo-downloader
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeployTrigger: "off"
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: MAX_CONCURRENT_DOWNLOADS
+        value: "1"
+      - key: MAX_STORED_DOWNLOADS
+        value: "1"
+      - key: MAX_MEDIA_DURATION_SECONDS
+        value: "1800"
+      - key: MAX_DOWNLOAD_SIZE_MB
+        value: "200"
+      - key: TEMP_FILE_TTL_MINUTES
+        value: "30"
+      - key: REQUEST_TIMEOUT_SECONDS
+        value: "120"

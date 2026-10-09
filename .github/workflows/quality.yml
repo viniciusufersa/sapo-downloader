@@ -1,0 +1,67 @@
+name: Quality checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+        working-directory: frontend
+      - run: npm audit --audit-level=moderate
+        working-directory: frontend
+      - run: npm run format:check
+        working-directory: frontend
+      - run: npm run lint
+        working-directory: frontend
+      - run: npm run typecheck
+        working-directory: frontend
+      - run: npm run test -- --run
+        working-directory: frontend
+      - run: npm run build
+        working-directory: frontend
+
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: backend/requirements-dev.lock
+      - run: python -m pip install --require-hashes -r requirements-dev.lock
+        working-directory: backend
+      - run: pip-audit --requirement requirements-dev.lock
+        working-directory: backend
+      - run: python -m ruff check app tests run.py
+        working-directory: backend
+      - run: python -m ruff format --check app tests run.py
+        working-directory: backend
+      - run: python -m mypy
+        working-directory: backend
+      - run: sudo apt-get update && sudo apt-get install --yes --no-install-recommends ffmpeg
+      - run: python -m pytest
+        working-directory: backend
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tags: sapo-downloader:ci
