@@ -4,6 +4,7 @@ import {
   ArrowUpRight,
   Check,
   CircleAlert,
+  Heart,
   Link2,
   LoaderCircle,
   ShieldCheck,
@@ -390,8 +391,9 @@ export default function SapoDownloader() {
       </main>
 
       <footer className="rodape">
-        <span>
-          Use apenas mídias próprias ou com autorização dos titulares.
+        <span className="assinatura">
+          Feito com <Heart aria-label="coração" role="img" size={12} /> por
+          Vinícius
         </span>
         <span aria-hidden="true">·</span>
         <a

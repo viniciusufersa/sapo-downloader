@@ -3,6 +3,16 @@ import { describe, expect, it, vi } from "vitest";
 import SapoDownloader from "./App";
 
 describe("Sapo Downloader", () => {
+  it("exibe a assinatura com um ícone de coração no rodapé", () => {
+    render(<SapoDownloader />);
+
+    expect(screen.getByText(/Feito com.*Vinícius/)).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "coração" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /Termos do YouTube/ }),
+    ).toBeInTheDocument();
+  });
+
   it("exibe os detalhes de um link válido e exige autorização antes do download", async () => {
     const requisicaoApiEspionada = vi
       .spyOn(globalThis, "fetch")

@@ -573,6 +573,10 @@ h1 > span {
   color: #626b62;
   font-size: var(--text-micro);
 }
+.assinatura svg {
+  color: #a85b60;
+  vertical-align: -2px;
+}
 .rodape a svg {
   margin-left: -2px;
 }
